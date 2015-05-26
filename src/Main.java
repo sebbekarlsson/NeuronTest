@@ -1,10 +1,10 @@
 
 public class Main {
 	public static void main(String[] args){
-		Neuron neuron = new Neuron(6){
+		Neuron neuron = new Neuron(239){
 
 			@Override
-			public void fire(int output) {
+			public void fire(float output) {
 				System.out.println(output);
 			}
 

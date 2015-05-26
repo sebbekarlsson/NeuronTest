@@ -1,8 +1,11 @@
+import java.util.Random;
+
 
 public abstract class Neuron {
 	public int[] weights;
 	public int threshold;
 	public Neuron neuron;
+	Random random = new Random();
 	
 	public Neuron(int threshold){
 		this.threshold = threshold;
@@ -12,13 +15,31 @@ public abstract class Neuron {
 		int inputWeight = 0;
 		for(int i = 0; i < inputs.length; i++){
 			NeuronInput input = inputs[i];
-			inputWeight += input.input*input.weight;
+			inputWeight += (input.input*input.weight)/inputs.length;
 		}
 		
-		if(inputWeight > this.threshold){
-			fire(inputWeight);
+		while(!(inputWeight >= this.threshold)){
+			
+			for(int i = 0; i < inputs.length; i++){
+				NeuronInput input = inputs[i];
+				inputWeight += (input.input*input.weight)/inputs.length;
+			}
+			
+			for(int i = 0; i < inputs.length; i++){
+				NeuronInput input = inputs[i];
+				input.weight = (inputWeight - this.threshold)/inputs.length;
+				System.out.println(input.weight);
+			}
+			
 		}
+		
+		fire(inputWeight);
+		
 	}
 	
-	public abstract void fire(int output);
+	public abstract void fire(float output);
+	
+	private int chooseInt(int...ints){
+		return ints[random.nextInt(ints.length)];
+	}
 }
